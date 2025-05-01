@@ -1,0 +1,4 @@
+Voltage Range,Cleaned Equipment,General Task Category,Specific Task,Parameters,Arc Flash PPE Category,Arc Flash Boundary,Likelihood of Occurrence
+50V – 240V,Panelboards ≤240V,Voltage Measurement,Reading a panel meter while operating a meter switch.,Maximum of 25 kA available fault current; maximum of 0.03 sec (2 cycles) fault clearing time; minimum working distance 455 mm (18 in.),1.0,485 mm (19 in.),No
+241V – 600V,Panelboards 241–600V,Voltage Measurement,Reading a panel meter while operating a meter switch.,Maximum of 25 kA available fault current; maximum of 0.03 sec (2 cycles) fault clearing time; minimum working distance 455 mm (18 in.),2.0,900 mm (3 ft),No
+1.1kV – 15kV,NEMA E2 Starters (2.3–7.2 kV),Voltage Measurement,Reading a panel meter while operating a meter switch.,Maximum of 35 kA available fault current; maximum of up to 0.24 sec (15 cycles) fault clearing time; minimum working distance 910 mm (36 in.),4.0,12 m (40 ft),No
