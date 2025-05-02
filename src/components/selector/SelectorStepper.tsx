@@ -69,9 +69,10 @@ const SelectorStepper: React.FC = () => {
       setEquipment('');
       setTaskCategory('');
       setSpecificTask('');
+      setProperlyMaintained(false);
       loadEquipment(voltageRange);
     }
-  }, [voltageRange, setEquipment, setTaskCategory, setSpecificTask]);
+  }, [voltageRange, setEquipment, setTaskCategory, setSpecificTask, setProperlyMaintained]);
 
   // Load equipment options when voltage range changes
   const loadEquipment = async (voltage: string) => {
@@ -98,10 +99,11 @@ const SelectorStepper: React.FC = () => {
     if (voltageRange && equipment) {
       setTaskCategory('');
       setSpecificTask('');
+      setProperlyMaintained(false);
       loadTaskCategories(voltageRange, equipment);
       setIsMCC(equipment.toLowerCase().includes('mcc'));
     }
-  }, [equipment, voltageRange, setTaskCategory, setSpecificTask]);
+  }, [equipment, voltageRange, setTaskCategory, setSpecificTask, setProperlyMaintained]);
 
   // Load task categories when equipment changes
   const loadTaskCategories = async (voltage: string, equip: string) => {
@@ -123,13 +125,14 @@ const SelectorStepper: React.FC = () => {
     }
   };
 
-  // Reset specific task when task category changes
+  // Reset specific task and properlyMaintained when task category changes
   useEffect(() => {
     if (voltageRange && equipment && taskCategory) {
       setSpecificTask('');
+      setProperlyMaintained(false);
       loadSpecificTasks(voltageRange, equipment, taskCategory);
     }
-  }, [taskCategory, voltageRange, equipment, setSpecificTask]);
+  }, [taskCategory, voltageRange, equipment, setSpecificTask, setProperlyMaintained]);
 
   // Load specific tasks when task category changes
   const loadSpecificTasks = async (voltage: string, equip: string, category: string) => {

@@ -47,6 +47,44 @@ export interface Database {
           created_at?: string | null
         }
       }
+      arc_flash_data_duplicate: {
+        Row: {
+          id: string
+          voltage_range: string
+          cleaned_equipment: string
+          general_task_category: string
+          specific_task: string
+          parameters: string
+          arc_flash_ppe_category: string
+          arc_flash_boundary: string
+          likelihood_of_occurrence: string
+          created_at: string | null
+        }
+        Insert: {
+          id?: string
+          voltage_range: string
+          cleaned_equipment: string
+          general_task_category: string
+          specific_task: string
+          parameters: string
+          arc_flash_ppe_category: string
+          arc_flash_boundary: string
+          likelihood_of_occurrence: string
+          created_at?: string | null
+        }
+        Update: {
+          id?: string
+          voltage_range?: string
+          cleaned_equipment?: string
+          general_task_category?: string
+          specific_task?: string
+          parameters?: string
+          arc_flash_ppe_category?: string
+          arc_flash_boundary?: string
+          likelihood_of_occurrence?: string
+          created_at?: string | null
+        }
+      }
     }
     Views: {
       [_ in never]: never

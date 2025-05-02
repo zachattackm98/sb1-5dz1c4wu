@@ -4,6 +4,11 @@ import type { Database } from './database.types';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
 
+console.log('Initializing Supabase client with:', {
+  url: supabaseUrl ? 'URL present' : 'URL missing',
+  key: supabaseAnonKey ? 'Key present' : 'Key missing'
+});
+
 if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error('Missing Supabase environment variables');
 }
@@ -31,7 +36,7 @@ export async function getVoltageRanges(): Promise<string[]> {
   console.log('Fetching voltage ranges...');
   
   const { data, error } = await supabase
-    .from('arc_flash_data')
+    .from('arc_flash_data_duplicate')
     .select('voltage_range');
   
   if (error) {
@@ -45,15 +50,28 @@ export async function getVoltageRanges(): Promise<string[]> {
   }
   
   const uniqueVoltages = [...new Set(data.map(item => item.voltage_range))];
-  console.log('Found voltage ranges:', uniqueVoltages);
-  return uniqueVoltages;
+  
+  // Define the exact order we want
+  const voltageOrder: Record<string, number> = {
+    '1.1kV – 15kV': 3,
+    '241V – 600V': 2,
+    '50V – 240V': 1
+  };
+  
+  // Sort based on the predefined order
+  const sortedVoltages = uniqueVoltages.sort((a, b) => 
+    (voltageOrder[b as keyof typeof voltageOrder] || 0) - (voltageOrder[a as keyof typeof voltageOrder] || 0)
+  );
+  
+  console.log('Found voltage ranges:', sortedVoltages);
+  return sortedVoltages;
 }
 
 export async function getEquipmentByVoltage(voltageRange: string): Promise<string[]> {
   console.log('Fetching equipment for voltage range:', voltageRange);
   
   const { data, error } = await supabase
-    .from('arc_flash_data')
+    .from('arc_flash_data_duplicate')
     .select('cleaned_equipment, general_task_category')
     .eq('voltage_range', voltageRange);
   
@@ -96,7 +114,7 @@ export async function getTaskCategoriesByEquipment(
   console.log('Fetching task categories for:', { voltageRange, equipment });
   
   const { data, error } = await supabase
-    .from('arc_flash_data')
+    .from('arc_flash_data_duplicate')
     .select('general_task_category')
     .eq('voltage_range', voltageRange)
     .eq('cleaned_equipment', equipment);
@@ -124,7 +142,7 @@ export async function getSpecificTasksByTaskCategory(
   console.log('Fetching specific tasks for:', { voltageRange, equipment, taskCategory });
   
   const { data, error } = await supabase
-    .from('arc_flash_data')
+    .from('arc_flash_data_duplicate')
     .select('specific_task')
     .eq('voltage_range', voltageRange)
     .eq('cleaned_equipment', equipment)
@@ -162,7 +180,7 @@ export async function getPPERequirements(
 
   const isMCC = equipment.toLowerCase().includes('mcc');
   let query = supabase
-    .from('arc_flash_data')
+    .from('arc_flash_data_duplicate')
     .select('*')
     .eq('voltage_range', voltageRange)
     .eq('cleaned_equipment', equipment)

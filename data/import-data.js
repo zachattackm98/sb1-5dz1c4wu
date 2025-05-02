@@ -57,7 +57,7 @@ async function importData() {
     // 3. Insert all data in one transaction
     console.log('Inserting data into Supabase...');
     const { error } = await supabase
-      .from('arc_flash_data')
+      .from('arc_flash_data_duplicate')
       .insert(data);
 
     if (error) {
@@ -66,7 +66,7 @@ async function importData() {
 
     // 4. Verify the insert
     const { count, error: countError } = await supabase
-      .from('arc_flash_data')
+      .from('arc_flash_data_duplicate')
       .select('*', { count: 'exact', head: true });
 
     if (countError) {

@@ -28,7 +28,7 @@ export function SelectorProvider({ children }: { children: ReactNode }) {
   const [equipment, setEquipment] = useState('');
   const [taskCategory, setTaskCategory] = useState('');
   const [specificTask, setSpecificTask] = useState('');
-  const [properlyMaintained, setProperlyMaintained] = useState(true);
+  const [properlyMaintained, setProperlyMaintained] = useState(false);
   const [useAdvancedParams, setUseAdvancedParams] = useState(false);
   
   const resetSelections = () => {
@@ -36,7 +36,7 @@ export function SelectorProvider({ children }: { children: ReactNode }) {
     setEquipment('');
     setTaskCategory('');
     setSpecificTask('');
-    setProperlyMaintained(true);
+    setProperlyMaintained(false);
     setUseAdvancedParams(false);
   };
   
